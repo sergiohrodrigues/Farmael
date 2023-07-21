@@ -6,7 +6,8 @@ const produtoSchema = new mongoose.Schema({
     titulo: { type: String, require: true },
     descricao: { type: String, require: true },
     valor: { type: Number, require: true },
-    categoria: { type: String, require: true }
+    categoria: { type: String, require: true },
+    quantidade: { type: Number, require: true}
 })
 
 export default mongoose.models.Produto || mongoose.model('Produto', produtoSchema)

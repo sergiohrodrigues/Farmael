@@ -110,8 +110,6 @@ export default function ModalProduto({modalOpen, setModalOpen, disabledScrollBod
             formData.append('descricao', descricao);
             formData.append('valor', valor.toString());
             formData.append('categoria', categoria);
-
-            console.log(selectedImage, 'criar')
             try {
                 const response = await axios.post(`http://localhost:8080/${opcao}`, formData, {
                     headers: {
@@ -128,7 +126,6 @@ export default function ModalProduto({modalOpen, setModalOpen, disabledScrollBod
         }
 
         if(operacao === 'atualizar'){
-            console.log(valor)
             const formDataAtualizada = new FormData();
             formDataAtualizada.append('titulo', produto);
             formDataAtualizada.append('descricao', descricao);

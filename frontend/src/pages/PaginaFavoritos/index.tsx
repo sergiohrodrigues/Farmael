@@ -57,7 +57,6 @@ export default function PaginaFavoritos(){
 
     useEffect(() => {
         const listaDeFavoritosLocalStorage = localStorage.getItem('listaDeFavoritos');
-        console.log(listaDeFavoritosLocalStorage)
         const listaDeFavoritosLocalStorageConvertida = JSON.parse(listaDeFavoritosLocalStorage || '[]');
           setListaDeFavoritos(listaDeFavoritosLocalStorageConvertida);
       }, [setListaDeFavoritos]);

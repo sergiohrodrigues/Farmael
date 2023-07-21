@@ -43,14 +43,11 @@ export default function PaginaCarrinho() {
   const listaCarrinho = useRecoilValue(carrinho)
   const setListaCarrinho = useSetRecoilState(carrinho)
   
-  // const [valorTotal, setValorTotal] = useState<Number[]>()
-  
   useEffect(() => {
     const listaLocalStorage = localStorage.getItem('listaDeCarrinho');
     const listaLocalStorageConvertida = JSON.parse(listaLocalStorage || '[]');
     if(listaLocalStorageConvertida.length){
       setListaCarrinho(listaLocalStorageConvertida);
-      setItensCarrinhoClone(listaLocalStorageConvertida)
     } else {
       setListaCarrinho([]);
     }
@@ -64,11 +61,19 @@ export default function PaginaCarrinho() {
   }
 
   function finalizarCompra(){
-    setCompraFinalizada(true)
-    setListaCarrinho([])
-    localStorage.setItem('listaDeCarrinho', JSON.stringify([]))
+    // setCompraFinalizada(true)
+    // setListaCarrinho([])
+    // localStorage.setItem('listaDeCarrinho', JSON.stringify([]))
 
-    // const linkWhats = `https://api.whatsapp.com/send?phone=5543998343648&text=${ItemEQuantidade}`;
+    const mandarIssoParaOWhats = listaCarrinho.map((item) => {
+      const mensagem = `Produto: ${item.titulo}, quantidade: ${item.quantidade}, valor: ${item.valor}`
+      return mensagem
+    })
+
+    const linkWhats = `https://api.whatsapp.com/send?phone=5543998343648&text=${mandarIssoParaOWhats.map((item => item))}`;
+    
+    // console.log(linkWhats)
+    console.log(mandarIssoParaOWhats)
 
     // function abrirLinkWhats(){
     //   window.open(linkWhats, '_blank')
@@ -77,22 +82,6 @@ export default function PaginaCarrinho() {
     // abrirLinkWhats()
   }
 
-  let soma = 0
-
-  // const somarValoresDaLista = () => {
-  //   for(var i = 0; i < valorTotalDaLista.length; i++){
-  //     soma += valorTotalDaLista[i]
-  //   }
-  // }
-
-  // somarValoresDaLista()
-
-  const itens = JSON.parse(JSON.stringify(listaCarrinho))
-
-  const [itensCarrinhoClone, setItensCarrinhoClone] = useState<Produto[]>()
-
-  console.log(itens)
-
   return (
     <ContainerProdutos>
       {compraFinalizada 
@@ -100,7 +89,7 @@ export default function PaginaCarrinho() {
             : listaCarrinho.length === 0
             ? <h2>Nao existe itens no carrinho</h2>
             : listaCarrinho.map((item, index) => (
-              <ProdutoCarrinho key={index} item={item} removerItemDoCarrinho={removerItemDoCarrinho}/>
+              <ProdutoCarrinho key={index} item={item} removerItemDoCarrinho={removerItemDoCarrinho} />
             ))
           }
           

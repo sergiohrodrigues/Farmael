@@ -21,11 +21,11 @@ export default function PaginaPadrao(){
         <div style={{ 
           backgroundImage: `url(${images[currentIndex]})`,
           backgroundColor: 'gray',
-          backgroundSize: '80% 100%',
+          backgroundSize: '90% 130%',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center',
+          backgroundPosition: '50% 20%',
           minWidth: '288px',
-          height: '40vh',
+          height: '50vh',
         }}>
         </div>
       );

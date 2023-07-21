@@ -32,7 +32,8 @@ router.post('/', upload.single('image'), async (req, res) => {
         const idUnico = uuidv4()
         const body = req.body
         body.id = idUnico
-        body.fileNameImage = fileNameImage
+        body.fileNameImage = fileNameImage,
+        body. quantidade = 1
         const user = await createOferta(body)
         res.status(201).send(user)
     } catch (err) {

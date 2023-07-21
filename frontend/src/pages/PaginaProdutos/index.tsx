@@ -12,7 +12,7 @@ const PaginaProdutosContainer = styled.main`
     @media screen and (min-width: 768px){
         min-height: 61vh;
         display: flex;
-        width: 90%;
+        width: 95%;
         margin: 0 auto;
     }
     @media screen and (min-width: 1024px){
@@ -45,9 +45,22 @@ const FiltroContainer = styled.section`
                 }
                 
             }
+            details{
+                margin-left: 1rem;
+                min-width: 218px;
+                summary{
+                    font-size: 1rem;
+                }
+                ul{
+                    li{
+                        font-size: 1rem;
+                    }
+                }
+            }
         }
     }
     @media screen and (min-width: 1024px){
+        width: 21%;
         details{
             summary:hover{
                 cursor: pointer;
@@ -58,6 +71,17 @@ const FiltroContainer = styled.section`
                 cursor: pointer;
                 width: 80%;
                 background-color: #9c9c9c;
+            }
+            details{
+                margin-left: 2rem;
+                summary{
+                    font-size: 1.3rem;
+                }
+                ul{
+                    li{
+                        font-size: 1.2rem;
+                    }
+                }
             }
         }
     }
@@ -76,7 +100,7 @@ const ProdutosContainer = styled.section`
         text-align: left;
     }
     @media screen and (min-width: 1024px){
-        width: 75%;
+        width: 79%;
         margin-top: 2rem;
         h2{
             font-size: 2rem;
@@ -142,25 +166,33 @@ export default function PaginaProdutos(){
         }
     })
 
-    const categoriaMedicamentos = [
-        {
-            categoria: 'Medicamentos',
-            opcoesCategoria: [
-                {
-                    opcao: 'Dipirona'
-                },
-                {
-                    opcao: 'Buscopan'
-                },
-                {
-                    opcao: 'Dipirona'
-                },
-                {
-                    opcao: 'Buscopan'
-                }
-            ],
-        }
-    ]
+    const categoriaMedicamentos = { 
+        "Medicamentos": [
+            {
+                categoria: 'Dor e frebre',
+                opcoesCategoria: [
+                    {
+                        opcao: 'Dipirona'
+                    },
+                    {
+                        opcao: 'Dorflex'
+                    }
+                ],
+            },
+            {
+                categoria: 'Azia e ma disgestão',
+                opcoesCategoria: [
+                    {
+                        opcao: 'Buscopan'
+                    },
+                    {
+                        opcao: 'Neozaugina'
+                    }
+                ],
+            }
+        ]
+
+    }
 
     const categoriaInfantil = [
         {
@@ -245,18 +277,19 @@ export default function PaginaProdutos(){
     return(
         <PaginaProdutosContainer>
             <FiltroContainer>
-                    {categoriaMedicamentos.map((itemCategoria, index) => (
-                        <details key={index}>
-                            <summary >{itemCategoria.categoria}</summary>
-                            {categoriaMedicamentos.map((itensOpcoes) => (
+                    <details>
+                        <summary>Medicamentos</summary>
+                        {categoriaMedicamentos.Medicamentos.map((item) => (
+                            <details>
+                                <summary>{item.categoria}</summary>
                                 <ul>
-                                    {itensOpcoes.opcoesCategoria.map((itemOpcao) => (
-                                        <li onClick={() => setProduto(itemOpcao.opcao)}>{itemOpcao.opcao}</li>
+                                    {item.opcoesCategoria.map((itemCategoria) => (
+                                        <li onClick={() => setProduto(itemCategoria.opcao)}>{itemCategoria.opcao}</li>
                                     ))}
                                 </ul>
-                            ))}
-                        </details>
-                    ))}
+                            </details>
+                        ))}
+                    </details>
 
                     {categoriaInfantil.map((itemCategoria, index) => (
                         <details key={index}>

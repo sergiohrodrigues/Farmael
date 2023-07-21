@@ -31,8 +31,8 @@ padding: 0.5rem 0;
 gap: 0.5rem;
 position: relative;
 img{
-    width: 150px;
-    height: 70px;
+   width: 150px;
+   height: 70px;
 }
 input{
     padding: 0.5rem;
@@ -201,8 +201,6 @@ export default function Menu() {
     const listaDeFavoritos = useRecoilValue(favoritos)
     const setListaDeFavoritos = useSetRecoilState(favoritos)
 
-    console.log(listaDeCarrinho)
-
     useEffect(() => {
         const listaDeCarrinhoLocalStorage = localStorage.getItem('listaDeCarrinho');
         const listaDeFavoritosLocalStorage = localStorage.getItem('listaDeFavoritos');
@@ -233,16 +231,16 @@ export default function Menu() {
         }
         const Medicamentos = [
             {
-                opcao: 'Dipirona',
+                opcao: 'Dor e febre',
             },
             {
-                opcao: 'Buscopan'
+                opcao: 'Azia e ma digestão'
             },
             {
-                opcao: 'Dipirona'
+                opcao: 'Dor e febre'
             },
             {
-                opcao: 'Buscopan'
+                opcao: 'Azia e ma digestão'
             }
         ]
 
