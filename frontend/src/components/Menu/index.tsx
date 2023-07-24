@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { carrinho, favoritos, produtoClicado } from '../../state/atom'
 import { MdOutlineFavoriteBorder } from 'react-icons/md'
-import { categoriasEOpcoes } from '../../utilidade/categorias'
+import { categoriasOpcoesERotas } from '../../utilidade/categorias'
 import { Badge } from '@mui/material'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { RiCloseFill } from 'react-icons/ri'
@@ -408,7 +408,7 @@ export default function Menu() {
                 </div>
             </PrimeiroMenu>
             <SegundoMenu display={medicamentos ? 'flex': 'none'}>
-                    {categoriasEOpcoes.map((itemCategoria, index) => (
+                    {categoriasOpcoesERotas.map((itemCategoria, index) => (
                         <span 
                             key={index}
                             style={{ borderBottom: categoriaAtiva === itemCategoria.categoria ? '2px solid #278a5b' : 'none' }} 

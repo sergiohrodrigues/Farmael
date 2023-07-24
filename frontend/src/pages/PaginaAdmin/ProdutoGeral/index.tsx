@@ -10,6 +10,8 @@ import styled from "styled-components"
 import { useEffect } from 'react'
 import { Produto } from '../../../interface/Produto';
 import { FaRegEdit, FaTrash } from 'react-icons/fa'
+import axios from 'axios';
+import { type } from 'os';
 
 const ContainerOferta = styled.section`
     min-height: 90vh;
@@ -85,8 +87,12 @@ export default function ProdutoGeral({abrirModal, setId, listaProdutosGeral, fet
         setId(item.id.toString())
     }
     
-    function deletarItem(id: number){
-        fetch(`http://localhost:8080/produtos/${id}`, {
+    const deletarItem = async (item: Produto) => {
+        // const img = item.urlImage.substring(21, 50)
+        // const path = 'public'
+        // const pathImagem = path + img
+
+        fetch(`http://localhost:8080/produtos/${item.id}`, {
             method: 'DELETE'
         })
         fetchProduto()
@@ -121,7 +127,7 @@ export default function ProdutoGeral({abrirModal, setId, listaProdutosGeral, fet
                         <TableCell align="center">{item.categoria}</TableCell>
                         <TableCell align="center">R${item.valor},00</TableCell>
                         <TableCell align="center"><FaRegEdit size={20} onClick={() => atualizarItem(item)}/></TableCell>
-                        <TableCell align="center"><FaTrash size={20} onClick={() => deletarItem(item.id)}/></TableCell>
+                        <TableCell align="center"><FaTrash size={20} onClick={() => deletarItem(item)}/></TableCell>
                         </TableRow>
                     ))}
                     </TableBody>

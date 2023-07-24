@@ -1,22 +1,35 @@
-export const categoriasEOpcoes = [
+export const categoriasOpcoesERotas = [
     {
-        categoria: 'Medicamentos',
+        categoria: "Medicamentos",
+        opcoes: [
+            {opcao: 'Dor e Febre'},
+            {opcao: 'Azia e Má Digestão'},
+            {opcao: 'Gripe e Resfriado'}, 
+            {opcao: 'Primeiros Socorros'},
+            {opcao: 'Genéricos'},
+            {opcao: 'Éticos'},
+        ],
         rota: '/medicamentos'
     },
     {
-        categoria: 'Linha Infantil',
+        categoria: "Linha Infantil",
+        opcoes: [
+            {opcao: 'Mamadeira'},
+            {opcao: 'Fralda'},
+            {opcao: 'Acessórios'}
+        ],
         rota: '/infantil'
     },
     {
-        categoria: 'Beleza',
-        rota: '/beleza'
-    },
-    {
-        categoria: 'Cabelo',
-        rota: '/cabelo'
-    },
-    {
-        categoria: 'Higiene Pessoal',
-        rota: '/higiene'
+        categoria: "Perfumaria",
+        opcoes: [
+            {opcao: 'Perfume'},
+            {opcao: 'Maquiagem'},
+            {opcao: 'Shampoo'}, 
+            {opcao: 'Condicionador'},
+            {opcao: 'Desodorante'},
+            {opcao: 'Antitranspirante'}
+        ],
+        rota: '/perfumaria'
     },
 ]

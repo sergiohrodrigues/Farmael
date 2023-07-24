@@ -2,6 +2,7 @@ import { Router } from 'express'
 import multer from 'multer';
 import { listaProduto, createProduto, deleteProduto, updateProduto } from '../services/produto'
 import { v4 as uuidv4 } from 'uuid'
+import { unlink } from 'node:fs'
 
 const router = Router()
 
@@ -44,6 +45,11 @@ router.post('/', upload.single('image'), async (req, res) => {
 router.delete('/:userId', async (req, res) => {
     await deleteProduto(req.params.userId)
     res.send()
+
+    // unlink('public/uploads/1690235296116.jpg', (err) => {
+    //   if (err) throw err;
+    //   console.log('path/file.txt was deleted');
+    // });
 })
 
 router.put('/:userId', async (req, res) => {
