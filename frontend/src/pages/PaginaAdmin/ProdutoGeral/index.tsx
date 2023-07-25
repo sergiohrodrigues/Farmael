@@ -86,6 +86,8 @@ export default function ProdutoGeral({abrirModal, setId, listaProdutosGeral, fet
         fetchProduto()
         setId(item.id.toString())
     }
+
+    console.log(listaProdutosGeral)
     
     const deletarItem = async (item: Produto) => {
         // const img = item.urlImage.substring(21, 50)
@@ -113,9 +115,7 @@ export default function ProdutoGeral({abrirModal, setId, listaProdutosGeral, fet
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {listaProdutosGeral.length === 0 
-                    ? <h2>Sem itens no momento</h2>
-                    : listaProdutosGeral.map((item) => (
+                    {listaProdutosGeral.map((item) => (
                         <TableRow
                         key={item.titulo}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

@@ -3,11 +3,9 @@ import { useState, useEffect } from "react"
 import { FaRegEdit, FaTrash } from "react-icons/fa"
 import styled from "styled-components"
 import { Produto } from "../../../interface/Produto"
-import { useSetRecoilState } from "recoil"
-import { itemParaAtualizar } from "../../../state/atom"
 
 const ContainerOferta = styled.section`
-    min-height: 94vh;
+    min-height: 90vh;
     width: 100%;
     background-color: #fff;
     text-align: center;

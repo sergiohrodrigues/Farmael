@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { carrinho, favoritos, produtoClicado } from '../../state/atom'
 import { MdOutlineFavoriteBorder } from 'react-icons/md'
-import { categoriasOpcoesERotas } from '../../utilidade/categorias'
+import { categoriasMenu } from '../../utilidade/categoriasMenu'
 import { Badge } from '@mui/material'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { RiCloseFill } from 'react-icons/ri'
@@ -210,7 +210,7 @@ export default function Menu() {
           setListaDeCarrinho(listaDeCarrinhoLocalStorageConvertida);
           setListaDeFavoritos(listaDeFavoritosLocalStorageConvertida);
         }
-      }, []);
+      }, [setListaDeCarrinho, setListaDeFavoritos]);
     
     function abrirMenuContato(){
         setMedicamentos(false)
@@ -230,78 +230,27 @@ export default function Menu() {
             return
         }
         const Medicamentos = [
-            {
-                opcao: 'Dor e febre',
-            },
-            {
-                opcao: 'Azia e ma digestão'
-            },
-            {
-                opcao: 'Dor e febre'
-            },
-            {
-                opcao: 'Azia e ma digestão'
-            }
+            {opcao: 'Dor e Febre'},
+            {opcao: 'Azia e Má Digestão'},
+            {opcao: 'Gripe e Resfriado'}, 
+            {opcao: 'Primeiros Socorros'},
+            {opcao: 'Genéricos'},
+            {opcao: 'Éticos'},
         ]
 
         const Infantil = [
-            {
-                opcao: 'Mamadeira'
-            },
-            {
-                opcao: 'Fralda'
-            },
-            {
-                opcao: 'Mamadeira'
-            },
-            {
-                opcao: 'Fralda'
-            },
+            {opcao: 'Mamadeira'},
+            {opcao: 'Fralda'},
+            {opcao: 'Acessórios'}
         ]
 
-        const Beleza = [
-            {
-                opcao: 'Perfume'
-            },
-            {
-                opcao: 'Maquiagem'
-            },
-            {
-                opcao: 'Perfume'
-            },
-            {
-                opcao: 'Maquiagem'
-            },
-        ]
-
-        const Cabelo = [
-            {
-                opcao: 'Shampoo'
-            },
-            {
-                opcao: 'Condicionador'
-            },
-            {
-                opcao: 'Shampoo'
-            },
-            {
-                opcao: 'Condicionador'
-            },
-        ]
-
-        const Higiene = [
-            {
-                opcao: 'Desodorante'
-            },
-            {
-                opcao: 'Antitranspirante'
-            },
-            {
-                opcao: 'Desodorante'
-            },
-            {
-                opcao: 'Antitranspirante'
-            },
+        const Perfumaria = [
+            {opcao: 'Perfume'},
+            {opcao: 'Maquiagem'},
+            {opcao: 'Shampoo'}, 
+            {opcao: 'Condicionador'},
+            {opcao: 'Desodorante'},
+            {opcao: 'Antitranspirante'}
         ]
 
         switch(categoriaAtiva){
@@ -311,14 +260,8 @@ export default function Menu() {
             case 'Linha Infantil':
                 setOpcoesCategorias(Infantil);
                 break
-            case 'Beleza':
-                setOpcoesCategorias(Beleza);
-                break
-            case 'Cabelo':
-                setOpcoesCategorias(Cabelo);
-                break
-            case 'Higiene Pessoal':
-                setOpcoesCategorias(Higiene);
+            case 'Perfumaria':
+                setOpcoesCategorias(Perfumaria);
                 break
         }
     }, [categoriaAtiva])
@@ -408,7 +351,7 @@ export default function Menu() {
                 </div>
             </PrimeiroMenu>
             <SegundoMenu display={medicamentos ? 'flex': 'none'}>
-                    {categoriasOpcoesERotas.map((itemCategoria, index) => (
+                    {categoriasMenu.map((itemCategoria, index) => (
                         <span 
                             key={index}
                             style={{ borderBottom: categoriaAtiva === itemCategoria.categoria ? '2px solid #278a5b' : 'none' }} 

@@ -24,6 +24,7 @@ export const deleteProduto = async (id) => {
     await databaseConnection()
     // await Produto.findByIdAndDelete(id)
     await Produto.deleteOne({id})
+    // console.log(Produto.find(id).param)
 }
 
 export const updateProduto = async (id, newBody) => {

@@ -5,6 +5,7 @@ import { produtoClicado } from "../../state/atom"
 import Card from "../../components/Card"
 import { useEffect, useState } from 'react'
 import { Produto } from "../../interface/Produto"
+import { categoriasMenu } from "../../utilidade/categoriasMenu"
 
 const PaginaProdutosContainer = styled.main`
     width: 90%;
@@ -130,8 +131,14 @@ const ListaProdutos = styled.ul`
 
 export default function PaginaProdutos(){
 
+    const medicamentos = ['Dor e Febre', 'Azia e Má Digestão', 'Gripe e Resfriado', 'Primeiros Socorros', 'Genéricos', 'Éticos']
+    const infantil = ['Mamadeira', 'Fralda', 'Acessórios']
+    const perfumaria = ['Perfume', 'Maquiagem', 'Shampoo', 'Condicionador', 'Desodorante','Antitranspirante']
+
+    const um = medicamentos.concat(infantil)
+    const categorias = um.concat(perfumaria)
+
     const params = useParams()
-    const categorias = ['Medicamentos', 'Linha Infantil', 'Beleza', 'Cabelo', 'Higiene Pessoal']
 
     const produto = useRecoilValue(produtoClicado)
     const setProduto = useSetRecoilState(produtoClicado)
@@ -166,182 +173,19 @@ export default function PaginaProdutos(){
         }
     })
 
-    const categoriaMedicamentos = { 
-        "Medicamentos": [
-            {
-                categoria: 'Dor e frebre',
-                opcoesCategoria: [
-                    {
-                        opcao: 'Dipirona'
-                    },
-                    {
-                        opcao: 'Dorflex'
-                    }
-                ],
-            },
-            {
-                categoria: 'Azia e ma disgestão',
-                opcoesCategoria: [
-                    {
-                        opcao: 'Buscopan'
-                    },
-                    {
-                        opcao: 'Neozaugina'
-                    }
-                ],
-            }
-        ]
-
-    }
-
-    const categoriaInfantil = [
-        {
-            categoria: 'Linha Infantil',
-            opcoesCategoria: [
-                {
-                    opcao: 'Mamadeira'
-                },
-                {
-                    opcao: 'Fralda'
-                },
-                {
-                    opcao: 'Mamadeira'
-                },
-                {
-                    opcao: 'Fralda'
-                }
-            ],
-        }
-    ]
-
-    const categoriaBeleza = [
-        {
-            categoria: 'Beleza',
-            opcoesCategoria: [
-                {
-                    opcao: 'Perfume'
-                },
-                {
-                    opcao: 'Maquiagem'
-                },
-                {
-                    opcao: 'Perfume'
-                },
-                {
-                    opcao: 'Maquiagem'
-                }
-            ],
-        }
-    ]
-
-    const categoriaCabelo = [
-        {
-            categoria: 'Cabelo',
-            opcoesCategoria: [
-                {
-                    opcao: 'Shampoo'
-                },
-                {
-                    opcao: 'Condicionador'
-                },
-                {
-                    opcao: 'Shampoo'
-                },
-                {
-                    opcao: 'Condicionador'
-                }
-            ],
-        }
-    ]
-
-    const categoriaHigiene = [
-        {
-            categoria: 'Higiene Pessoal',
-            opcoesCategoria: [
-                {
-                    opcao: 'Desodorante'
-                },
-                {
-                    opcao: 'Antitranspirante'
-                },
-                {
-                    opcao: 'Desodorante'
-                },
-                {
-                    opcao: 'Antitranspirante'
-                }
-            ],
-        }
-    ]
-
     return(
         <PaginaProdutosContainer>
             <FiltroContainer>
+                {categoriasMenu.map((item) => (
                     <details>
-                        <summary>Medicamentos</summary>
-                        {categoriaMedicamentos.Medicamentos.map((item) => (
-                            <details>
-                                <summary>{item.categoria}</summary>
-                                <ul>
-                                    {item.opcoesCategoria.map((itemCategoria) => (
-                                        <li onClick={() => setProduto(itemCategoria.opcao)}>{itemCategoria.opcao}</li>
-                                    ))}
-                                </ul>
-                            </details>
-                        ))}
+                        <summary>{item.categoria}</summary>
+                        <ul>
+                            {item.subcategorias.map((sub) => (
+                                <li onClick={() => setProduto(sub.item)}>{sub.item}</li>
+                            ))}
+                        </ul>
                     </details>
-
-                    {categoriaInfantil.map((itemCategoria, index) => (
-                        <details key={index}>
-                            <summary>{itemCategoria.categoria}</summary>
-                            {categoriaInfantil.map((itensOpcoes) => (
-                                <ul>
-                                    {itensOpcoes.opcoesCategoria.map((itemOpcao) => (
-                                        <li onClick={() => setProduto(itemOpcao.opcao)}>{itemOpcao.opcao}</li>
-                                    ))}
-                                </ul>
-                            ))}
-                        </details>
-                    ))}
-
-                    {categoriaBeleza.map((itemCategoria, index) => (
-                        <details key={index}>
-                            <summary>{itemCategoria.categoria}</summary>
-                            {categoriaBeleza.map((itensOpcoes) => (
-                                <ul>
-                                    {itensOpcoes.opcoesCategoria.map((itemOpcao) => (
-                                        <li onClick={() => setProduto(itemOpcao.opcao)}>{itemOpcao.opcao}</li>
-                                    ))}
-                                </ul>
-                            ))}
-                        </details>
-                    ))}
-
-                    {categoriaCabelo.map((itemCategoria, index) => (
-                        <details key={index}>
-                            <summary>{itemCategoria.categoria}</summary>
-                            {categoriaCabelo.map((itensOpcoes) => (
-                                <ul>
-                                    {itensOpcoes.opcoesCategoria.map((itemOpcao) => (
-                                        <li onClick={() => setProduto(itemOpcao.opcao)}>{itemOpcao.opcao}</li>
-                                    ))}
-                                </ul>
-                            ))}
-                        </details>
-                    ))}
-
-                    {categoriaHigiene.map((itemCategoria, index) => (
-                        <details key={index}>
-                            <summary>{itemCategoria.categoria}</summary>
-                            {categoriaHigiene.map((itensOpcoes) => (
-                                <ul>
-                                    {itensOpcoes.opcoesCategoria.map((itemOpcao) => (
-                                        <li onClick={() => setProduto(itemOpcao.opcao)}>{itemOpcao.opcao}</li>
-                                    ))}
-                                </ul>
-                            ))}
-                        </details>
-                    ))}
+                ))}
             </FiltroContainer>
 
             <ProdutosContainer>

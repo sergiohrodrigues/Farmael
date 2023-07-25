@@ -71,6 +71,28 @@ button:hover{
 }
 `
 
+const CategoriaContainer = styled.fieldset`
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+    legend{
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    div{
+        width: auto;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        input{
+            width: auto;
+        }
+        label{
+            width: auto;
+        }
+    }
+`
+
 interface Props {
     modalOpen: boolean,
     setModalOpen: React.Dispatch<React.SetStateAction<boolean>>,
@@ -91,13 +113,13 @@ export default function ModalProduto({modalOpen, setModalOpen, disabledScrollBod
     const [valor, setValor] = useState(0)
     const [categoria, setCategoria] = useState('')
 
-    const categorias = [       
-        {id: 1 , categoria: 'Medicamentos'},
-        {id: 2 , categoria: 'Linha Infantil'},
-        {id: 3 , categoria: 'Beleza'},
-        {id: 4 , categoria: 'Cabelo'},
-        {id: 5 , categoria: 'Higiene Pessoal'}
-    ]
+    // const categorias = [       
+    //     {id: 1 , categoria: 'Medicamentos'},
+    //     {id: 2 , categoria: 'Linha Infantil'},
+    //     {id: 3 , categoria: 'Beleza'},
+    //     {id: 4 , categoria: 'Cabelo'},
+    //     {id: 5 , categoria: 'Higiene Pessoal'}
+    // ]
 
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
@@ -148,6 +170,9 @@ export default function ModalProduto({modalOpen, setModalOpen, disabledScrollBod
         }
     }
 
+    // const inputsCategoria = document.querySelector('input[name="categoria"]:checked')
+    // console.log(document.querySelector('input[name="categoria"]:checked')?.value!)
+
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
           setSelectedImage(event.target.files[0]);
@@ -185,6 +210,54 @@ export default function ModalProduto({modalOpen, setModalOpen, disabledScrollBod
         setItemParaAtualizar(undefined)
     }
 
+    interface Categorias {
+        opcao: string
+    }
+
+    const [categoriaSelecinada, setCategoriaSelecionada] = useState('Medicamentos')
+    const [subcategorias, setSubcategorias] = useState<Categorias[]>([])
+
+    useEffect(() => {
+        if(!categoriaSelecinada){
+            return
+        }
+        const Medicamentos = [
+            {opcao: 'Dor e Febre'},
+            {opcao: 'Azia e Má Digestão'},
+            {opcao: 'Gripe e Resfriado'}, 
+            {opcao: 'Primeiros Socorros'},
+            {opcao: 'Genéricos'},
+            {opcao: 'Éticos'},
+        ]
+
+        const Infantil = [
+            {opcao: 'Mamadeira'},
+            {opcao: 'Fralda'},
+            {opcao: 'Acessórios'}
+        ]
+
+        const Perfumaria = [
+            {opcao: 'Perfume'},
+            {opcao: 'Maquiagem'},
+            {opcao: 'Shampoo'}, 
+            {opcao: 'Condicionador'},
+            {opcao: 'Desodorante'},
+            {opcao: 'Antitranspirante'}
+        ]
+
+        switch(categoriaSelecinada){
+            case 'Medicamentos':
+                setSubcategorias(Medicamentos);
+                break
+            case 'Linha Infantil':
+                setSubcategorias(Infantil);
+                break
+            case 'Perfumaria':
+                setSubcategorias(Perfumaria);
+                break
+        }
+    }, [categoriaSelecinada])
+
     return(
         <ModalContainer display={modalOpen ? 'flex' : 'none'}>
             <FormContainer action="">
@@ -201,10 +274,25 @@ export default function ModalProduto({modalOpen, setModalOpen, disabledScrollBod
                     <label htmlFor="valor">Valor: </label>
                     <input type="number" id="valor" value={valor} onChange={(event) => setValor(event.target.valueAsNumber)}/> 
                 </div>
+                <CategoriaContainer>
+                    <legend>Qual categoria deseja adicionar o produto?</legend>
+                    <div>
+                        <input type="radio" name="categoria" value="Medicamentos" defaultChecked onChange={e => setCategoriaSelecionada(e.target.value)}/>
+                        <label>Medicamentos</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="categoria" value="Linha Infantil" onChange={e => setCategoriaSelecionada(e.target.value)}/>
+                        <label>Linha Infantil</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="categoria" value="Perfumaria" onChange={e => setCategoriaSelecionada(e.target.value)}/>
+                        <label>Perfumaria</label>
+                    </div>
+                </CategoriaContainer>
                 <select value={categoria} onChange={(e) => setCategoria(e.target.value)}>
                     <option defaultChecked>Selecione uma categoria</option>
-                    {categorias.map((item, index) => (
-                        <option key={index} value={item.categoria}>{item.categoria}</option>
+                    {subcategorias.map((item, index) => (
+                        <option key={index} value={item.opcao}>{item.opcao}</option>
                     ))}
                 </select>
                 {operacao === 'criar' && <div>

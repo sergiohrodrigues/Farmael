@@ -25,11 +25,11 @@ const upload = multer({ storage: storage });
 router.get('/', async (req, res) => {
     const userList = await listaProduto()
     res.send(userList)
-})
-
-router.post('/', upload.single('image'), async (req, res) => {
+  })
+  
+  router.post('/', upload.single('image'), async (req, res) => {
     try {
-        const fileNameImage = req.file.filename;
+      const fileNameImage = req.file.filename;
         const idUnico = uuidv4()
         const body = req.body
         body.id = idUnico
@@ -37,12 +37,12 @@ router.post('/', upload.single('image'), async (req, res) => {
         body.quantidade = 1
         const user = await createProduto(body)
         res.status(201).send(user)
-    } catch (err) {
-       res.status(400).send(err) 
-    }
-})
-
-router.delete('/:userId', async (req, res) => {
+      } catch (err) {
+        res.status(400).send(err) 
+      }
+    })
+    
+    router.delete('/:userId', async (req, res) => {
     await deleteProduto(req.params.userId)
     res.send()
 
