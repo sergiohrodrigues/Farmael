@@ -107,17 +107,22 @@ export default function ProdutoCarrinho({item, removerItemDoCarrinho}: Props){
       }
 
       let quantidadeAumentada = quantidadeInicial - 1
-      setQuantidade(quantidadeAumentada)
-      const soma = valorInicial * quantidadeAumentada
-      setValorMaisQuantidade(soma)
 
-      itemClonado.quantidade = quantidadeInicial - 1
-      itemClonado.valor = valorMaisQuantidade - valorInicial
-
-      setListaCarrinho(listaAntiga => {
-        const itemAtual = listaAntiga.findIndex(evt => evt.titulo === itemClonado.titulo)
-        return [...listaAntiga.slice(0, itemAtual), itemClonado, ...listaAntiga.slice(itemAtual + 1)]
-      })
+      if(quantidadeInicial === 1){
+        quantidadeAumentada = 1
+      } else {
+        setQuantidade(quantidadeAumentada)
+        const soma = valorInicial * quantidadeAumentada
+        setValorMaisQuantidade(soma)
+  
+        itemClonado.quantidade = quantidadeInicial - 1
+        itemClonado.valor = valorMaisQuantidade - valorInicial
+  
+        setListaCarrinho(listaAntiga => {
+          const itemAtual = listaAntiga.findIndex(evt => evt.titulo === itemClonado.titulo)
+          return [...listaAntiga.slice(0, itemAtual), itemClonado, ...listaAntiga.slice(itemAtual + 1)]
+        })
+      }
     }
 
     return(

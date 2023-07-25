@@ -1,5 +1,6 @@
 import databaseConnection from "../utils/database"
 import Produto from "../models/produto"
+import { unlink } from 'node:fs'
 
 export const listaProduto = async () => {
     await databaseConnection()
@@ -21,10 +22,18 @@ export const createProduto = async (user) => {
 }
 
 export const deleteProduto = async (id) => {
+    const produtos = await Produto.find()
+    const produtoSelecionado = produtos.filter(prod => prod.id === id)
+    const pathImagem = produtoSelecionado[0].fileNameImage
+
     await databaseConnection()
     // await Produto.findByIdAndDelete(id)
     await Produto.deleteOne({id})
-    // console.log(Produto.find(id).param)
+    
+    unlink(`public/uploads/${pathImagem}`, (err) => {
+      if (err) throw err;
+      console.log('path/file.txt was deleted');
+    });
 }
 
 export const updateProduto = async (id, newBody) => {

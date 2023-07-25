@@ -57,7 +57,7 @@ export default function PaginaAdmin(){
     useEffect(() => {
         disabledScrollBody(false)
         fetchProduto()
-    }, [])
+    }, [listaProdutosGeral])
 
     function disabledScrollBody(isDisable : boolean){
         if(typeof window !== undefined){

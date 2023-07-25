@@ -5,13 +5,9 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useState } from "react"
 import styled from "styled-components"
-import { useEffect } from 'react'
 import { Produto } from '../../../interface/Produto';
 import { FaRegEdit, FaTrash } from 'react-icons/fa'
-import axios from 'axios';
-import { type } from 'os';
 
 const ContainerOferta = styled.section`
     min-height: 90vh;
@@ -86,14 +82,8 @@ export default function ProdutoGeral({abrirModal, setId, listaProdutosGeral, fet
         fetchProduto()
         setId(item.id.toString())
     }
-
-    console.log(listaProdutosGeral)
     
     const deletarItem = async (item: Produto) => {
-        // const img = item.urlImage.substring(21, 50)
-        // const path = 'public'
-        // const pathImagem = path + img
-
         fetch(`http://localhost:8080/produtos/${item.id}`, {
             method: 'DELETE'
         })

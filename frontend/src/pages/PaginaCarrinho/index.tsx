@@ -61,25 +61,22 @@ export default function PaginaCarrinho() {
   }
 
   function finalizarCompra(){
-    // setCompraFinalizada(true)
-    // setListaCarrinho([])
-    // localStorage.setItem('listaDeCarrinho', JSON.stringify([]))
+    setCompraFinalizada(true)
+    setListaCarrinho([])
+    localStorage.setItem('listaDeCarrinho', JSON.stringify([]))
 
     const mandarIssoParaOWhats = listaCarrinho.map((item) => {
-      const mensagem = `Produto: ${item.titulo}, quantidade: ${item.quantidade}, valor: ${item.valor}`
+      const mensagem = `Produto: ${item.titulo}, quantidade: ${item.quantidade}, valor: ${item.valor},00 reais. %0A`
       return mensagem
     })
 
-    const linkWhats = `https://api.whatsapp.com/send?phone=5543998343648&text=${mandarIssoParaOWhats.map((item => item))}`;
-    
-    // console.log(linkWhats)
-    console.log(mandarIssoParaOWhats)
+    const linkWhats = `https://api.whatsapp.com/send?phone=5543998343648&text=${mandarIssoParaOWhats.map((item => item))}`
 
-    // function abrirLinkWhats(){
-    //   window.open(linkWhats, '_blank')
-    // }
+    function abrirLinkWhats(){
+      window.open(linkWhats, '_blank')
+    }
 
-    // abrirLinkWhats()
+    abrirLinkWhats()
   }
 
   return (

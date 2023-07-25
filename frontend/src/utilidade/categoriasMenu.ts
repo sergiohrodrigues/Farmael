@@ -31,5 +31,5 @@ export const categoriasMenu = [
             {item: 'Antitranspirante'}
         ],
         rota: '/perfumaria'
-    },
+    }
 ]
