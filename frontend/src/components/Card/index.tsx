@@ -91,7 +91,7 @@ export default function Card({item}: Props){
         const listaDeFavoritosLocalStorage = localStorage.getItem('listaDeFavoritos');
         const listaDeCarrinhoLocalStorageConvertida = JSON.parse(listaDeCarrinhoLocalStorage || '[]');
         const listaDeFavoritosLocalStorageConvertida = JSON.parse(listaDeFavoritosLocalStorage || '[]');
-        if(listaDeCarrinhoLocalStorageConvertida.length && listaDeFavoritosLocalStorageConvertida.length){
+        if(listaDeCarrinhoLocalStorageConvertida.length > 0 || listaDeFavoritosLocalStorageConvertida.length > 0){
           const hasCarrinhoInList = listaDeCarrinhoLocalStorageConvertida.find((itemLista : Produto) => itemLista.id === item.id);
           setListaDeCarrinho(listaDeCarrinhoLocalStorageConvertida);
           setBtnCarrinho(hasCarrinhoInList);
