@@ -13,7 +13,7 @@ export default function PaginaPadrao(){
       useEffect(() => {
         const interval = setInterval(() => {
           setCurrentIndex((currentIndex + 1) % images.length)
-        }, 5000);
+        }, 0);
         return () => clearInterval(interval);
       }, [currentIndex, images]);
     

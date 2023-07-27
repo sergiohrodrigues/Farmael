@@ -82,15 +82,8 @@ export default function PaginaInicial(){
                 <ContainerItem>
                     {listaItensOfertas.length === 0
                     ? <h2>Sem ofertas no momento </h2>
-                    : listaItensOfertas.map((item, index) => (
-                        // <li key={index}>
-                        //     <img src={item.urlImage} alt={item.titulo} />
-                        //     <div>
-                        //         <h3>{item.titulo}</h3>
-                        //         <button>Mais detalhes</button>
-                        //     </div>
-                        // </li>
-                        <Card item={item}/>
+                    : listaItensOfertas.map((item) => (
+                        <Card key={item.id} item={item}/>
                     ))}
                 </ContainerItem>
         </ContainerInicio>

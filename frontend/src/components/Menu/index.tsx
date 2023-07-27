@@ -299,15 +299,14 @@ export default function Menu() {
                 <Link to='/'>
                     <img src='/imagens/logo.png' alt="" />
                 </Link>
-                <input type="search" id='inputPesquisa' placeholder='O que voce procura?' onKeyUpCapture={(evento) => {
-                    const target = evento.target as HTMLInputElement
-                    const itemPesquisado = target.value
-
+                <input type="search" id='inputPesquisa' placeholder='O que voce procura?' onKeyDown={(evento) => {
                     if(evento.key === 'Enter'){
-                        navigate(`${produto}`)
+                        const target = evento.target as HTMLInputElement
+                        const itemPesquisado = target.value
+                        
                         setMedicamentos(false)
                         setProduto(itemPesquisado)
-                        navigate(`/${produto}`)
+                        navigate(`/${produto.toLowerCase()}`)
                     }
                 }}/>
                 {medicamentos
@@ -328,8 +327,14 @@ export default function Menu() {
                                 </a>
                             </li>
                             <li>
-                                <span><AiOutlineMail /> E-mail:</span>
-                                drogaria.farmael@gmail.com
+                                <a 
+                                    href="https://mail.google.com/mail/u/0/#inbox?compose=CllgCHrhVJcqVLNzPkwCsnZSttvKlSgmCHjGcrdqRMCBkbCxlnrHzLkSZQkLlrpcTKbktblTqsq"
+                                    target='_blank' 
+                                    rel="noreferrer"
+                                >
+                                    <span><AiOutlineMail /> E-mail:</span>
+                                    drogaria.farmael@gmail.com
+                                </a>
                             </li>
                         </UlIcones>
                     </div>

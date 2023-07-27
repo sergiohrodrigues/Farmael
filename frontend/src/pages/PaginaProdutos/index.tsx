@@ -30,6 +30,16 @@ const FiltroContainer = styled.section`
         padding: 0.5rem;
         margin-top: 2rem;
         details{
+            summary:hover{
+                cursor: pointer;
+                background-color: #9c9c9c;
+                width: 100%;
+            }
+            li:hover{
+                cursor: pointer;
+                width: 100%;
+                background-color: #9c9c9c;
+            }
             summary{
                 min-width: 185px;
                 font-size: 1.3rem;
@@ -41,6 +51,7 @@ const FiltroContainer = styled.section`
                 flex-direction: column;
                 gap: 0.5rem;
                 li{
+                    width: 100%;
                     font-size: 1.2rem;
                     padding: 0.5rem;
                 }
@@ -66,11 +77,11 @@ const FiltroContainer = styled.section`
             summary:hover{
                 cursor: pointer;
                 background-color: #9c9c9c;
-                width: 80%;
+                width: 95%;
             }
             li:hover{
                 cursor: pointer;
-                width: 80%;
+                width: 95%;
                 background-color: #9c9c9c;
             }
             details{
@@ -93,6 +104,7 @@ const ProdutosContainer = styled.section`
     text-align: center;
     h2{
         font-size: 2rem;
+        text-transform: lowercase;
     }
     h2::first-letter{
         text-transform: uppercase;
@@ -105,9 +117,6 @@ const ProdutosContainer = styled.section`
         margin-top: 2rem;
         h2{
             font-size: 2rem;
-        }
-        h2::first-letter{
-            text-transform: uppercase;
         }
     }
 `
@@ -161,15 +170,18 @@ export default function PaginaProdutos(){
 
     useEffect(() => {
         setProduto(String(params.produto))
-    }, [setProduto, params.produto])
+    }, [])
 
     const itensFiltrados = itens.filter(itemDaLista => {
         if(categorias.includes(produto)){
             const itensFiltradosPorCategorias = itemDaLista.categoria.includes(produto)
             return itensFiltradosPorCategorias
         } else {
-            const itemFiltrado = itemDaLista.titulo.includes(produto)
-            return itemFiltrado
+            switch(produto){
+                case 'Medicamentos': return medicamentos.includes(itemDaLista.categoria)
+                case 'Linha Infantil': return infantil.includes(itemDaLista.categoria)
+                case 'Perfumaria': return perfumaria.includes(itemDaLista.categoria)
+            }
         }
     })
 
@@ -177,11 +189,11 @@ export default function PaginaProdutos(){
         <PaginaProdutosContainer>
             <FiltroContainer>
                 {categoriasMenu.map((item) => (
-                    <details>
+                    <details key={item.categoria}>
                         <summary>{item.categoria}</summary>
                         <ul>
-                            {item.subcategorias.map((sub) => (
-                                <li onClick={() => setProduto(sub.item)}>{sub.item}</li>
+                            {item.subcategorias.map((sub, index) => (
+                                <li key={index} onClick={() => setProduto(sub.item)}>{sub.item}</li>
                             ))}
                         </ul>
                     </details>
@@ -191,8 +203,8 @@ export default function PaginaProdutos(){
             <ProdutosContainer>
                 <h2>{produto.length === 0 ? params.produto : produto}</h2>
                 <ListaProdutos>
-                    {itensFiltrados.map((item) => (
-                        <Card item={item}/>
+                    {itensFiltrados.map((item, index) => (
+                        <Card key={index} item={item}/>
                     ))}
                 </ListaProdutos>
             </ProdutosContainer>

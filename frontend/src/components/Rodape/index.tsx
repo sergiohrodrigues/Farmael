@@ -2,6 +2,10 @@ import { BsWhatsapp, BsInstagram, BsFacebook, BsFillTelephoneFill,  } from 'reac
 import { AiOutlineMail, AiFillCreditCard } from 'react-icons/ai'
 import { MdPix } from 'react-icons/md'
 import styled from 'styled-components'
+import { categoriasMenu } from '../../utilidade/categoriasMenu'
+import { useSetRecoilState } from 'recoil'
+import { produtoClicado } from '../../state/atom'
+import { useNavigate } from 'react-router-dom'
 
 const RodapeContainer = styled.footer`
     background-color: #278a5b;
@@ -49,17 +53,27 @@ const RodapeContainer = styled.footer`
 `
 
 export default function Rodape(){
+    const navigate = useNavigate()
+    const setProduto = useSetRecoilState(produtoClicado)
+
+    function abrirLink(link: string){
+        window.open(link, '_blank')
+    }
+
+    function mostrarProdutos(categoria: string){
+        setProduto(`${categoria}`)
+        navigate(categoria)
+    }
+
     return(
         <RodapeContainer>
             <div>
                 <span>Categorias</span>
                 <hr />
                 <ul>
-                    <li>Medicamentos</li>
-                    <li>Linha infantil</li>
-                    <li>Beleza</li>
-                    <li>Cabelo</li>
-                    <li>Higiene pessoal</li>
+                    {categoriasMenu.map((item, index) => {
+                        return <li key={index} onClick={() => mostrarProdutos(item.categoria)}>{item.categoria}</li>
+                    })}
                 </ul>
             </div>
             <div>
@@ -67,30 +81,21 @@ export default function Rodape(){
                 <hr />
                 <ul className='redesepagamento'>
                     <li>
-                        <BsWhatsapp />
+                        <BsWhatsapp onClick={() => abrirLink('https://wa.me/5519998423814?text=Ol%C3%A1%2C+')}/>
                     </li>
                     <li>
-                        <BsInstagram />
+                        <BsInstagram onClick={() => abrirLink('https://www.instagram.com/drogaria.farmael/')}/>
                     </li>
                     <li>
-                        <BsFacebook />
+                        <BsFacebook onClick={() => abrirLink('https://www.instagram.com/drogaria.farmael/')}/>
                     </li>
                 </ul>
             </div>
             <div>
-                <span id='contato'>Contato</span>
+                <span id='contato' style={{display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem'}}><AiOutlineMail /> E-mail</span>
                 <hr />
                 <ul>
-                    <li>
-                        <BsFillTelephoneFill /> Telefone: <br/>
-                        43 3524-1790
-                    </li>
-                    <li>
-                        <BsWhatsapp/> Whatsapp: <br/>
-                        43 99999-9999
-                    </li>
-                    <li>
-                        <AiOutlineMail /> E-mail: <br/>
+                    <li onClick={() => abrirLink('https://mail.google.com/mail/u/0/#inbox?compose=CllgCHrhVJcqVLNzPkwCsnZSttvKlSgmCHjGcrdqRMCBkbCxlnrHzLkSZQkLlrpcTKbktblTqsq')}>
                         farmael@gmail.com
                     </li>
                 </ul>

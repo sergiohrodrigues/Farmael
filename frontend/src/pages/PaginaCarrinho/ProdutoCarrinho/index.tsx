@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { Produto } from "../../../interface/Produto"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { BsTrashFill } from 'react-icons/bs'
 import { GrAddCircle } from 'react-icons/gr'
 import { MdRemoveCircleOutline } from 'react-icons/md'
@@ -72,14 +72,16 @@ const ProdutoContainer = styled.li`
 
 interface Props {
     item: Produto,
-    removerItemDoCarrinho: (item: Produto) => void
+    cloneListaCarrinho: Produto[],
+    setCloneListaCarrinho: React.Dispatch<React.SetStateAction<Produto[]>>
 }
 
-export default function ProdutoCarrinho({item, removerItemDoCarrinho}: Props){
-    const [quantidadeInicial, setQuantidade] = useState(1)
+export default function ProdutoCarrinho({item, cloneListaCarrinho, setCloneListaCarrinho}: Props){
+    const [quantidadeInicial, setQuantidadeInicial] = useState(1)
     const [ valorInicial, setValorInicial] = useState(item.valor)
     const [ valorMaisQuantidade, setValorMaisQuantidade] = useState(item.valor)
 
+    const listaCarrinho = useRecoilValue(carrinho)
     const setListaCarrinho = useSetRecoilState(carrinho)
     
     function aumentarQuantidade(){
@@ -88,14 +90,14 @@ export default function ProdutoCarrinho({item, removerItemDoCarrinho}: Props){
       }
 
       let quantidadeAumentada = quantidadeInicial + 1
-      setQuantidade(quantidadeAumentada)
+      setQuantidadeInicial(quantidadeAumentada)
       const soma = valorInicial * quantidadeAumentada
       setValorMaisQuantidade(soma)
 
       itemClonado.quantidade = quantidadeInicial + 1
       itemClonado.valor = valorMaisQuantidade + valorInicial
 
-      setListaCarrinho(listaAntiga => {
+      setCloneListaCarrinho(listaAntiga => {
         const itemAtual = listaAntiga.findIndex(evt => evt.titulo === itemClonado.titulo)
         return [...listaAntiga.slice(0, itemAtual), itemClonado, ...listaAntiga.slice(itemAtual + 1)]
       })
@@ -111,18 +113,25 @@ export default function ProdutoCarrinho({item, removerItemDoCarrinho}: Props){
       if(quantidadeInicial === 1){
         quantidadeAumentada = 1
       } else {
-        setQuantidade(quantidadeAumentada)
+        setQuantidadeInicial(quantidadeAumentada)
         const soma = valorInicial * quantidadeAumentada
         setValorMaisQuantidade(soma)
   
         itemClonado.quantidade = quantidadeInicial - 1
         itemClonado.valor = valorMaisQuantidade - valorInicial
   
-        setListaCarrinho(listaAntiga => {
+        setCloneListaCarrinho(listaAntiga => {
           const itemAtual = listaAntiga.findIndex(evt => evt.titulo === itemClonado.titulo)
           return [...listaAntiga.slice(0, itemAtual), itemClonado, ...listaAntiga.slice(itemAtual + 1)]
         })
       }
+    }
+
+    function removerItemDoCarrinho(item: Produto){
+      const novaLista = listaCarrinho.filter((itemLista) => itemLista.id !== item.id)
+      setListaCarrinho(novaLista)
+      window.location.reload()
+      localStorage.setItem('listaDeCarrinho', JSON.stringify(novaLista))
     }
 
     return(
@@ -131,10 +140,10 @@ export default function ProdutoCarrinho({item, removerItemDoCarrinho}: Props){
             <h3>{item.titulo}</h3>
             <div>
             <MdRemoveCircleOutline onClick={diminuirQuantidade}/>
-            <button>{quantidadeInicial}</button>
+            <button>{item.quantidade}</button>
             <GrAddCircle onClick={aumentarQuantidade}/>
             </div>
-            <span>Valor: ${valorMaisQuantidade},00</span>
+            <span>Valor: ${item.valor},00</span>
             <BsTrashFill onClick={() => removerItemDoCarrinho(item)}/>
         </ProdutoContainer>
     )

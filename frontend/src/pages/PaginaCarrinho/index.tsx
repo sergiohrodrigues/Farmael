@@ -40,37 +40,32 @@ export default function PaginaCarrinho() {
   const navigate = useNavigate()
   const [compraFinalizada, setCompraFinalizada] = useState(false)
 
-  const listaCarrinho = useRecoilValue(carrinho)
+  const [cloneListaCarrinho, setCloneListaCarrinho] = useState<Produto[]>([])
+
   const setListaCarrinho = useSetRecoilState(carrinho)
+  const listaCarrinho = useRecoilValue(carrinho)
   
   useEffect(() => {
     const listaLocalStorage = localStorage.getItem('listaDeCarrinho');
     const listaLocalStorageConvertida = JSON.parse(listaLocalStorage || '[]');
     if(listaLocalStorageConvertida.length){
-      setListaCarrinho(listaLocalStorageConvertida);
+      setCloneListaCarrinho(listaLocalStorageConvertida);
     } else {
-      setListaCarrinho([]);
+      setCloneListaCarrinho([]);
     }
-  }, [setListaCarrinho]);
-  
-  
-  function removerItemDoCarrinho(item: Produto){
-    const novaLista = listaCarrinho.filter((itemLista) => itemLista.id !== item.id)
-    setListaCarrinho(novaLista)
-    localStorage.setItem('listaDeCarrinho', JSON.stringify(novaLista))
-  }
+  }, [setCloneListaCarrinho]);
 
   function finalizarCompra(){
     setCompraFinalizada(true)
     setListaCarrinho([])
     localStorage.setItem('listaDeCarrinho', JSON.stringify([]))
 
-    const mandarIssoParaOWhats = listaCarrinho.map((item) => {
+    const mandarIssoParaOWhats = cloneListaCarrinho.map((item) => {
       const mensagem = `Produto: ${item.titulo}, quantidade: ${item.quantidade}, valor: ${item.valor},00 reais. %0A`
       return mensagem
     })
 
-    const linkWhats = `https://api.whatsapp.com/send?phone=5543998343648&text=${mandarIssoParaOWhats.map((item => item))}`
+    const linkWhats = `https://api.whatsapp.com/send/?phone=5519998423814&text=${mandarIssoParaOWhats.map((item => item))}`
 
     function abrirLinkWhats(){
       window.open(linkWhats, '_blank')
@@ -83,10 +78,15 @@ export default function PaginaCarrinho() {
     <ContainerProdutos>
       {compraFinalizada 
             ? <><h2>Compra finalizado com sucesso!! <br/>Enviaremos um e-mail com mais detalhes.</h2> <button onClick={() => navigate('/')}>Inicio</button></>
-            : listaCarrinho.length === 0
+            : cloneListaCarrinho.length === 0
             ? <h2>Nao existe itens no carrinho</h2>
-            : listaCarrinho.map((item, index) => (
-              <ProdutoCarrinho key={index} item={item} removerItemDoCarrinho={removerItemDoCarrinho} />
+            : cloneListaCarrinho.map((item, index) => (
+              <ProdutoCarrinho 
+                key={index} 
+                item={item}
+                cloneListaCarrinho={cloneListaCarrinho}
+                setCloneListaCarrinho={setCloneListaCarrinho}
+              />
             ))
           }
           

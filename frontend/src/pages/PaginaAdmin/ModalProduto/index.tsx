@@ -170,9 +170,6 @@ export default function ModalProduto({modalOpen, setModalOpen, disabledScrollBod
         }
     }
 
-    // const inputsCategoria = document.querySelector('input[name="categoria"]:checked')
-    // console.log(document.querySelector('input[name="categoria"]:checked')?.value!)
-
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
           setSelectedImage(event.target.files[0]);
