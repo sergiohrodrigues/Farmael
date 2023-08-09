@@ -140,12 +140,14 @@ const ListaProdutos = styled.ul`
 
 export default function PaginaProdutos(){
 
-    const medicamentos = ['Dor e Febre', 'Azia e Má Digestão', 'Gripe e Resfriado', 'Primeiros Socorros', 'Genéricos', 'Éticos']
-    const infantil = ['Mamadeira', 'Fralda', 'Acessórios']
-    const perfumaria = ['Perfume', 'Maquiagem', 'Shampoo', 'Condicionador', 'Desodorante','Antitranspirante']
+    const medicamentos = ['DOR E FEBRE', 'AZIA E MÁ DIGESTÃO', 'GRIPE E RESFRIADO', 'PRIMEIROS SOCORROS', 'GENÉRICOS', 'ÉTICOS']
+    const infantil = ['MAMADEIRA', 'FRALDA', 'ACESSÓRIOS']
+    const perfumaria = ['PERFUME', 'MAQUIAGEM', 'SHAMPOO', 'CONDICIONADOR', 'DESODORANTE','ANTITRANSPIRANTE']
 
     const um = medicamentos.concat(infantil)
     const categorias = um.concat(perfumaria)
+
+    console.log(categoriasMenu)
 
     const params = useParams()
 
@@ -169,18 +171,19 @@ export default function PaginaProdutos(){
     }, [])
 
     useEffect(() => {
-        setProduto(String(params.produto))
+        setProduto(String(params.produto?.toUpperCase()))
     }, [])
 
     const itensFiltrados = itens.filter(itemDaLista => {
         if(categorias.includes(produto)){
-            const itensFiltradosPorCategorias = itemDaLista.categoria.includes(produto)
+            const itensFiltradosPorCategorias = itemDaLista.categoria.toUpperCase().includes(produto.toUpperCase())
             return itensFiltradosPorCategorias
-        } else {
+        } 
+        else {
             switch(produto){
-                case 'Medicamentos': return medicamentos.includes(itemDaLista.categoria)
-                case 'Linha Infantil': return infantil.includes(itemDaLista.categoria)
-                case 'Perfumaria': return perfumaria.includes(itemDaLista.categoria)
+                case 'MEDICAMENTOS': return medicamentos.includes(itemDaLista.categoria)
+                case 'LINHA INFANTIL': return infantil.includes(itemDaLista.categoria)
+                case 'PERFUMARIA': return perfumaria.includes(itemDaLista.categoria)
             }
         }
     })
@@ -193,7 +196,7 @@ export default function PaginaProdutos(){
                         <summary>{item.categoria}</summary>
                         <ul>
                             {item.subcategorias.map((sub, index) => (
-                                <li key={index} onClick={() => setProduto(sub.item)}>{sub.item}</li>
+                                <li key={index} onClick={() => setProduto(sub.item.toUpperCase())}>{sub.item}</li>
                             ))}
                         </ul>
                     </details>

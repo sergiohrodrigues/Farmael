@@ -1,6 +1,6 @@
 import { FaHeadset } from 'react-icons/fa'
-import { AiOutlineUser, AiOutlineMail } from 'react-icons/ai'
-import { BsCart2,BsFillTelephoneFill, BsWhatsapp } from 'react-icons/bs'
+import { AiOutlineMail } from 'react-icons/ai'
+import { BsCart2,BsWhatsapp } from 'react-icons/bs'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -11,7 +11,6 @@ import { categoriasMenu } from '../../utilidade/categoriasMenu'
 import { Badge } from '@mui/material'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { RiCloseFill } from 'react-icons/ri'
-import { Produto } from '../../interface/Produto'
 
 const HeaderContainer = styled.header`
     position: relative;
@@ -281,16 +280,12 @@ export default function Menu() {
         navigate(`${item}`)
         setMedicamentos(false)
         setCategoriaAtiva('')
-        setProduto(item)
+        setProduto(item.toUpperCase())
     }
     
     function tirarOMouseDasOpcoes(){
         setMedicamentos(false)
         setCategoriaAtiva('')
-    }
-
-    const limparPesquisa = () => {
-        setProduto('')
     }
     
     return (
@@ -305,7 +300,7 @@ export default function Menu() {
                         const itemPesquisado = target.value
                         
                         setMedicamentos(false)
-                        setProduto(itemPesquisado)
+                        setProduto(itemPesquisado.toUpperCase())
                         navigate(`/${produto.toLowerCase()}`)
                     }
                 }}/>
@@ -316,10 +311,6 @@ export default function Menu() {
                     <div>
                         <a className='contato-mobile' href="#contato"><FaHeadset onMouseEnter={abrirMenuContato} onClick={() => setContato(false)}/></a>
                         <UlIcones display={contato ? 'flex' : 'none'} onMouseLeave={() => setContato(false)}>
-                            {/* <li>
-                                <BsFillTelephoneFill /> Telefone: <br/>
-                                43 3524-1790
-                            </li> */}
                             <li>
                                 <a href="https://wa.me/5519998423814?text=Ol%C3%A1%2C+" target='_blank' rel="noreferrer">
                                     <span><BsWhatsapp/> Whatsapp: </span>
