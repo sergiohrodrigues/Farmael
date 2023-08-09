@@ -139,16 +139,8 @@ const ListaProdutos = styled.ul`
 `
 
 export default function PaginaProdutos(){
-
-    const medicamentos = ['DOR E FEBRE', 'AZIA E MÁ DIGESTÃO', 'GRIPE E RESFRIADO', 'PRIMEIROS SOCORROS', 'GENÉRICOS', 'ÉTICOS']
-    const infantil = ['MAMADEIRA', 'FRALDA', 'ACESSÓRIOS']
-    const perfumaria = ['PERFUME', 'MAQUIAGEM', 'SHAMPOO', 'CONDICIONADOR', 'DESODORANTE','ANTITRANSPIRANTE']
-
-    const um = medicamentos.concat(infantil)
-    const categorias = um.concat(perfumaria)
-
-    console.log(categoriasMenu)
-
+    const list = categoriasMenu.flatMap(categoria => categoria.subcategorias)
+    const subcategorias = list.map(item => item.item.toUpperCase())
     const params = useParams()
 
     const produto = useRecoilValue(produtoClicado)
@@ -168,25 +160,30 @@ export default function PaginaProdutos(){
             .then(response => response.json())
             .then(resposta => setItens(resposta))
             .catch(error => console.log('Authorization failed : ' + error.message));
-    }, [])
 
-    useEffect(() => {
         setProduto(String(params.produto?.toUpperCase()))
     }, [])
 
+    const medicamentos = ['DOR E FEBRE', 'AZIA E MÁ DIGESTÃO', 'GRIPE E RESFRIADO', 'PRIMEIROS SOCORROS', 'GENÉRICOS', 'ÉTICOS']
+    const infantil = ['MAMADEIRA', 'FRALDA', 'ACESSÓRIOS']
+    const perfumaria = ['PERFUME', 'MAQUIAGEM', 'SHAMPOO', 'CONDICIONADOR', 'DESODORANTE','ANTITRANSPIRANTE']
+
+    const [produtoNaoEncontrado, setProdutoNaoEncontrado] = useState('')
+
     const itensFiltrados = itens.filter(itemDaLista => {
-        if(categorias.includes(produto)){
-            const itensFiltradosPorCategorias = itemDaLista.categoria.toUpperCase().includes(produto.toUpperCase())
+        if(subcategorias.includes(produto)){
+            const itensFiltradosPorCategorias = itemDaLista.categoria.toUpperCase().includes(produto)
             return itensFiltradosPorCategorias
-        } 
-        else {
+        } else{
             switch(produto){
-                case 'MEDICAMENTOS': return medicamentos.includes(itemDaLista.categoria)
-                case 'LINHA INFANTIL': return infantil.includes(itemDaLista.categoria)
-                case 'PERFUMARIA': return perfumaria.includes(itemDaLista.categoria)
+                case 'MEDICAMENTOS': return medicamentos.includes(itemDaLista.categoria.toUpperCase())
+                case 'LINHA INFANTIL': return infantil.includes(itemDaLista.categoria.toUpperCase())
+                case 'PERFUMARIA': return perfumaria.includes(itemDaLista.categoria.toUpperCase())
             }
         }
     })
+
+    console.log(produto)
 
     return(
         <PaginaProdutosContainer>
@@ -205,6 +202,7 @@ export default function PaginaProdutos(){
 
             <ProdutosContainer>
                 <h2>{produto.length === 0 ? params.produto : produto}</h2>
+                {/* {subcategorias.includes(produto) ? '' : <h3>Nenhum produto encontrado com esse nome.</h3>} */}
                 <ListaProdutos>
                     {itensFiltrados.map((item, index) => (
                         <Card key={index} item={item}/>
